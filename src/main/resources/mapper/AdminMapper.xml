@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jincreation.YJtarot.dao.AdminMapper">
+    <resultMap id="BaseResultMap" type="com.jincreation.YJtarot.model.AdminUser">
+        <id column="admin_user_id" jdbcType="BIGINT" property="adminId" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="nick_name" jdbcType="VARCHAR" property="nickname" />
+        <result column="locked" jdbcType="TINYINT" property="locked" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        admin_user_id, username, email, password, nick_name, locked
+    </sql>
+
+    <select id="login" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tarot_admin_user
+        where username = #{username,jdbcType=VARCHAR} AND password=#{password,jdbcType=VARCHAR} AND locked = 0
+    </select>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from tarot_admin_user
+        where admin_user_id = #{adminId,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert" parameterType="com.jincreation.YJtarot.model.AdminUser">
+        insert into tarot_admin_user (admin_user_id, username, email, password,
+                                      nick_name, locked)
+        values (#{adminId,jdbcType=BIGINT}, #{userame,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+                #{nickname,jdbcType=VARCHAR}, #{locked,jdbcType=TINYINT})
+    </insert>
+    <insert id="insertSelective" parameterType="com.jincreation.YJtarot.model.AdminUser">
+        insert into tarot_admin_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="adminId != null">
+                admin_user_id,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="nickname != null">
+                nick_name,
+            </if>
+            <if test="locked != null">
+                locked,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="adminId != null">
+                #{adminId,jdbcType=BIGINT},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="locked != null">
+                #{locked,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.jincreation.YJtarot.model.AdminUser">
+        update tarot_admin_user
+        <set>
+            <if test="username != null">
+                username = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                nick_name = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="locked != null">
+                locked = #{locked,jdbcType=TINYINT},
+            </if>
+        </set>
+        where admin_user_id = #{adminId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.jincreation.YJtarot.model.AdminUser">
+        update tarot_admin_user
+        set username = #{username,jdbcType=VARCHAR},
+            email = #{email,jdbcType=VARCHAR},
+            password = #{password,jdbcType=VARCHAR},
+            nick_name = #{nickname,jdbcType=VARCHAR},
+            locked = #{locked,jdbcType=TINYINT}
+        where admin_user_id = #{adminId,jdbcType=BIGINT}
+    </update>
+</mapper>

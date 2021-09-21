@@ -1,4 +1,4 @@
-package com.jincreation.YJtarot.domain;
+package com.jincreation.YJtarot.model;
 
 public enum Tarot {
     TheFool(0, "The Fool", ""),
